@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Для тебя 💜</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header>💖 Для тебя, любимая 💖</header>
+
+  <nav>
+    <a onclick="showSection('home')">Главная</a>
+    <a onclick="showSection('about')">О нас</a>
+    <a onclick="showSection('love')">Моя радость</a>
+    <a onclick="showSection('secret')">Интересненько</a>
+    <a onclick="showSection('music')">Музыка</a>
+  </nav>
+
+  <div id="home" class="section active">
+    Привет, любимая! 💌<br>
+    Этот сайтик — только для тебя.<br>
+    Надеюсь, что тебе всё понравится! 💖
+
+    <!-- Контейнер для сердечек -->
+    <div id="heartContainer" style="position: relative; width: 100%; height: 200px; margin-top: 2em;"></div>
+  </div>
+
+  <div id="about" class="section">
+    Помнишь наши первые моменты?<br>Это было волшебно с самого начала ✨<br>
+    Каждый день с тобой — словно новая глава удивительной истории, полной света и тепла.
+  </div>
+
+  <div id="love" class="section">
+    Я очень тебя люблю. Ты — моя радость, моё вдохновение 💞<br>Спасибо, что ты есть.
+  </div>
+
+  <div id="secret" class="section">
+    <div id="passwordPrompt">
+      🛡️ Введи пароль, чтобы увидеть интересненькое:<br>
+      <input type="password" id="passwordInput" placeholder="Введи пароль" autocomplete="off" />
+      <button onclick="checkPassword()">Открыть</button>
+      <div id="errorMessage" style="color: pink; margin-top: 1em;"></div>
+    </div>
+
+    <div id="sliderArea" class="hidden">
+      <div id="sliderContent" style="font-size:1.6em; min-height: 120px; margin-top: 1em;"></div>
+      <div id="sliderButtons">
+        <button onclick="prevSlide()">← Назад</button>
+        <button onclick="nextSlide()">Вперёд →</button>
+      </div>
+      <div id="animatedNotes">
+        <span class="note">♪</span>
+        <span class="note">♫</span>
+        <span class="note">♬</span>
+        <span class="note">♩</span>
+        <span class="note">♭</span>
+        <span class="note">♯</span>
+      </div>
+    </div>
+
+    <!-- Контейнер для YouTube плеера (скрыт) -->
+    <div id="player" style="display:none;"></div>
+  </div>
+
+  <div id="music" class="section">
+    🎵 Музыка — это один из самых прекрасных языков любви.<br>
+    Она помогает выражать чувства, которые словами не передать,<br>
+    дарит вдохновение и согревает сердце в самые важные моменты.<br>
+    Пусть каждая мелодия напоминает тебе о нашей нежности и заботе. 💖
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
