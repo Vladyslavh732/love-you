@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Для тебя 💜</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #4b0082, #8a2be2);
+      color: white;
+    }
+
+    header {
+      background-color: rgba(0,0,0,0.3);
+      padding: 1em;
+      text-align: center;
+      font-size: 2em;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 1em;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.5em 1em;
+      border-radius: 8px;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .section {
+      display: none;
+      padding: 2em;
+      text-align: center;
+      font-size: 1.8em;
+      min-height: 60vh;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    input[type="password"] {
+      padding: 0.5em;
+      font-size: 1em;
+      border-radius: 5px;
+      border: none;
+      margin-top: 1em;
+    }
+
+    button {
+      padding: 0.5em 1em;
+      font-size: 1em;
+      margin-left: 0.5em;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #sliderButtons {
+      margin-top: 1.5em;
+    }
+
+    #sliderButtons button {
+      margin: 0 1em;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Новое: анимированные музыкальные ноты */
+    #animatedNotes {
+      position: relative;
+      width: 100%;
+      height: 150px;
+      overflow: visible;
+      pointer-events: none;
+      margin-top: 1em;
+    }
+
+    .note {
+      position: absolute;
+      bottom: 0;
+      font-size: 1.5em;
+      color: #ffe4e1;
+      opacity: 0.8;
+      animation-name: floatUp;
+      animation-timing-function: ease-out;
+      animation-iteration-count: infinite;
+    }
+
+    .note:nth-child(1) {
+      left: 10%;
+      animation-duration: 5s;
+      animation-delay: 0s;
+    }
+
+    .note:nth-child(2) {
+      left: 25%;
+      font-size: 1.8em;
+      animation-duration: 6s;
+      animation-delay: 1s;
+    }
+
+    .note:nth-child(3) {
+      left: 40%;
+      font-size: 1.4em;
+      animation-duration: 4.5s;
+      animation-delay: 0.7s;
+    }
+
+    .note:nth-child(4) {
+      left: 60%;
+      font-size: 1.7em;
+      animation-duration: 5.5s;
+      animation-delay: 1.2s;
+    }
+
+    .note:nth-child(5) {
+      left: 75%;
+      font-size: 1.3em;
+      animation-duration: 4.8s;
+      animation-delay: 0.3s;
+    }
+
+    .note:nth-child(6) {
+      left: 90%;
+      font-size: 1.6em;
+      animation-duration: 6.2s;
+      animation-delay: 0.9s;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150px) scale(1.3);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>💖 Для тебя, любимая 💖</header>
+
+  <nav>
+    <a onclick="showSection('home')">Главная</a>
+    <a onclick="showSection('about')">О нас</a>
+    <a onclick="showSection('love')">Моя радость</a>
+    <a onclick="showSection('secret')">Интересненько</a>
+    <a onclick="showSection('music')">Музыка</a>
+  </nav>
+
+  <div id="home" class="section active">
+    Привет, любимая! 💌<br>
+    Этот сайтик — только для тебя.<br>
+    Надеюсь, что тебе всё понравится! 💖
+
+    <!-- Контейнер для сердечек -->
+    <div id="heartContainer" style="position: relative; width: 100%; height: 200px; margin-top: 2em;"></div>
+  </div>
+
+  <div id="about" class="section">
+    Помнишь наши первые моменты?<br>Это было волшебно с самого начала ✨<br>
+    Каждый день с тобой — словно новая глава удивительной истории, полной света и тепла.
+  </div>
+
+  <div id="love" class="section">
+    Я очень тебя люблю. Ты — моя радость, моё вдохновение 💞<br>Спасибо, что ты есть.
+  </div>
+
+  <div id="secret" class="section">
+    <div id="passwordPrompt">
+      🛡️ Введи пароль, чтобы увидеть интересненькое:<br>
+      <input type="password" id="passwordInput" placeholder="Введи пароль" autocomplete="off" />
+      <button onclick="checkPassword()">Открыть</button>
+      <div id="errorMessage" style="color: pink; margin-top: 1em;"></div>
+    </div>
+
+    <div id="sliderArea" class="hidden">
+      <div id="sliderContent" style="font-size:1.6em; min-height: 120px; margin-top: 1em;"></div>
+      <div id="sliderButtons">
+        <button onclick="prevSlide()">← Назад</button>
+        <button onclick="nextSlide()">Вперёд →</button>
+      </div>
+      <div id="animatedNotes">
+        <span class="note">♪</span>
+        <span class="note">♫</span>
+        <span class="note">♬</span>
+        <span class="note">♩</span>
+        <span class="note">♭</span>
+        <span class="note">♯</span>
+      </div>
+    </div>
+
+    <!-- Контейнер для YouTube плеера (скрыт) -->
+    <div id="player" style="display:none;"></div>
+  </div>
+
+  <div id="music" class="section">
+    🎵 Музыка — это один из самых прекрасных языков любви.<br>
+    Она помогает выражать чувства, которые словами не передать,<br>
+    дарит вдохновение и согревает сердце в самые важные моменты.<br>
+    Пусть каждая мелодия напоминает тебе о нашей нежности и заботе. 💖
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    const slides = [
+      "В тишине наших сердец играет нежная мелодия.",
+      "Ты — как солнце с утра, согреваешь меня своим светом.",
+      "Твои слова для меня — самый лучший комплимент.",
+      "Когда я думаю о тебе, мир становится ярче.",
+      "Каждый миг с тобой — это подарок, который я храню.",
+      "Ты — вдохновение для моих самых прекрасных мечтаний."
+    ];
+
+    const videoIds = [
+      "WFBDaxewTY0",
+      "odinQDui0CY",
+      "5sd7gJTnFRM",
+      "xJrA4MfsZjQ",
+      "wEhqCE0aEnE",
+      "Nhz_8fWhDT0"
+    ];
+
+    const correctPassword = 'love';
+
+    let player;
+    let currentSlide = 0;
+    let sliderStarted = false;
+
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value.trim().toLowerCase();
+      if (input === correctPassword) {
+        document.getElementById('passwordPrompt').style.display = 'none';
+        document.getElementById('sliderArea').classList.remove('hidden');
+        sliderStarted = true;
+        currentSlide = 0;
+        if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+          // YouTube API ещё не загружен, создадим плеер при загрузке API
+        } else {
+          createPlayer();
+        }
+      } else {
+        document.getElementById('errorMessage').innerText = 'Неправильный пароль 💔';
+      }
+    }
+
+    function createPlayer() {
+      if (player) {
+        player.destroy();
+        player = null;
+      }
+      player = new YT.Player('player', {
+        height: '0',
+        width: '0',
+        videoId: videoIds[currentSlide],
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          disablekb: 1,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          iv_load_policy: 3
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      event.target.playVideo();
+      updateSlideText();
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        nextSlide();
+      }
+    }
+
+    function updateSlideText() {
+      document.getElementById('sliderContent').textContent = slides[currentSlide];
+    }
+
+    function nextSlide() {
+      if (!sliderStarted) return;
+      currentSlide++;
+      if (currentSlide >= slides.length) currentSlide = 0;
+      if (player) player.loadVideoById(videoIds[currentSlide]);
+      updateSlideText();
+    }
+
+    function prevSlide() {
+      if (!sliderStarted) return;
+      currentSlide--;
+      if (currentSlide < 0) currentSlide = slides.length - 1;
+      if (player) player.loadVideoById(videoIds[currentSlide]);
+      updateSlideText();
+    }
+
+    function onYouTubeIframeAPIReady() {
+      if (sliderStarted && !player) {
+        createPlayer();
+      }
+    }
+
+    // Загрузка YouTube IFrame API
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    let firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // Эффект: создаём сердечки по движению мыши в блоке #home
+    const heartContainer = document.getElementById('heartContainer');
+
+    function createHeart(x, y) {
+      const heart = document.createElement('div');
+      heart.textContent = '💖';
+      heart.style.position = 'absolute';
+      heart.style.left = x + 'px';
+      heart.style.top = y + 'px';
+      heart.style.fontSize = '24px';
+      heart.style.opacity = 1;
+      heart.style.pointerEvents = 'none';
+      heart.style.userSelect = 'none';
+      heart.style.transition = 'transform 1s ease-out, opacity 1s ease-out';
+      heartContainer.appendChild(heart);
+
+      // Запускаем анимацию — сердце поднимается и исчезает
+      setTimeout(() => {
+        heart.style.transform = 'translateY(-50px) scale(1.5)';
+        heart.style.opacity = 0;
+      }, 10);
+
+      // Удаляем элемент после анимации
+      setTimeout(() => {
+        heart.remove();
+      }, 1000);
+    }
+
+    // Добавляем слушатель движения мыши на #home
+    const homeSection = document.getElementById('home');
+    homeSection.addEventListener('mousemove', (e) => {
+      // Координаты относительно контейнера heartContainer
+      const rect = heartContainer.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      createHeart(x, y);
+    });
+  </script>
+
+</body>
+</html>
